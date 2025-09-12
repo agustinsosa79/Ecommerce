@@ -16,7 +16,7 @@ export const register = async (req , res) => {
         await user.save();
         const accesToken = jwt.sign({ id: user._id }, jwtSecretKey, { expiresIn: '1h' });
         const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '7d' });
-        res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict', maxAge: 3600000 });
+        res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'Strict', maxAge: 7 * 24 * 60 * 60 * 1000});
         res.status(201).json({ message: "User registered successfully", token: accesToken });
     } catch (error) {
         console.error("Registration error:", error);
@@ -26,7 +26,7 @@ export const register = async (req , res) => {
 
 
 export const refreshToken = async (req, res) => {
-    const { token } = req.body
+    const  token  = req.cookies.refreshToken
     if (!token) return res.status(401).json({message: 'no token provied'})
     const jwtRefreshSecretKey = process.env.JWT_REFRESH_SECRET_KEY
     try {
