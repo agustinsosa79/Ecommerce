@@ -3,4 +3,6 @@ import orderSchema from "../schemas/ordersSchema.js";
 
 
 
-const oderModel = mongoose.model("orders", orderSchema)
+const orderModel = mongoose.model("orders", orderSchema)
+
+export default orderModel
