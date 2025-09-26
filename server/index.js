@@ -17,6 +17,9 @@ app.get('/', (req, res) => {
 app.get('/products', productsRoutes)
 
 
+
+
+
 app.listen(PORT, () => {
     console.log(`Escuchando en el puerto http://localhost:${PORT}`);
 })
