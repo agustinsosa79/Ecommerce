@@ -6,6 +6,8 @@ import { connectDB } from "./server/connectDB.js";
 const app = express()
 
 
+app.use(express.json())
+
 const PORT = 4000
 
 connectDB()
@@ -14,7 +16,7 @@ app.get('/', (req, res) => {
     res.json({message: 'Hola mundo'})
 })
 
-app.get('/products', productsRoutes)
+app.use('/products', productsRoutes)
 
 
 

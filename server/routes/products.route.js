@@ -6,7 +6,7 @@ const route = Router();
 route.get('/', getAllProducts);
 route.get('/:id', getProduct);
 route.post('/', createProduct);
-route.post('/:id', editProduct);
+route.put('/:id', editProduct);
 route.delete('/:id', deleteProduct)
 
 
