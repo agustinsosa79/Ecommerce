@@ -1,9 +1,12 @@
 import express from "express";
-import {z} from "zod"
 import productsRoutes from '../server/routes/products.route.js'
+import usersRoutes from '../server/routes/users.route.js'
 import { connectDB } from "./server/connectDB.js";
-
+import dotenv from 'dotenv'
 const app = express()
+
+
+dotenv.config()
 
 
 app.use(express.json())
@@ -17,6 +20,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/products', productsRoutes)
+app.use('/users', usersRoutes)
 
 
 
