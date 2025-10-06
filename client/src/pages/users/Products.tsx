@@ -1,8 +1,7 @@
-import React from 'react'
 
 const Products = () => {
   return (
-    <div>Products</div>
+    <div className="bg-black">Products</div>
   )
 }
 
