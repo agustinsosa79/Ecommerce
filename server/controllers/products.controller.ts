@@ -49,7 +49,23 @@
         catch (error: any) {
             res.status(500).json({error: error.message})
         }
+    }
 
+    export const createManyProducts = async (req: AuthRequest, res: Response) => {
+        try {
+            const arrayProducts = req.body
+
+            const productWithOwner = arrayProducts.map((p: any) => ({
+                ...p,
+                owner: req.user?.id
+            }))
+
+            const insertProducts = await product.insertMany(productWithOwner)
+
+            res.status(201).json(insertProducts)
+        } catch (error) {
+            res.status(500).json({ message: 'Error al crear los productos' })
+        }
     }
 
     export const editProduct = async (req: AuthRequest, res: Response) => {

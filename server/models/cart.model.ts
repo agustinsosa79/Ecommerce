@@ -25,4 +25,4 @@ const cartSchema = new mongoose.Schema<Icart>({
 
 
 
-export default mongoose.model<Icart>('Cart', cartSchema )
+export default mongoose.model<Icart>('Cart', cartSchema)

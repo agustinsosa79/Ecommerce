@@ -4,6 +4,7 @@ import productsRoutes from '../server/routes/products.route.js'
 import cartRoutes from '../server/routes/cart.routes.js'
 import ordersRoutes from '../server/routes/orders.route.js'
 import { connectDB } from "./server/connectDB.js";
+import cors from 'cors'
 import dotenv from 'dotenv'
 const app = express()
 
@@ -17,6 +18,7 @@ const PORT = 4000
 
 connectDB()
 
+app.use(cors())
 app.get('/', (req, res) => {
     res.json({message: 'Hola mundo'})
 })
