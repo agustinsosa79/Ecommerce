@@ -1,6 +1,6 @@
 import Routes from 'express'
 import { getOrder, createOrder } from '../controllers/orders.controller.ts'
-import { authMiddleware } from '../middlewares/authMiddleware.js'
+import { authMiddleware } from '../middlewares/authMiddleware.ts'
 
 const route = Routes()
 

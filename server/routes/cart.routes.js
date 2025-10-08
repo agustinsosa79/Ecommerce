@@ -1,6 +1,6 @@
 import Routes from 'express'
 import { getCart, addCart, updateCartItem, deleteCartItem } from '../controllers/cart.controller.ts'
-import { authMiddleware } from '../middlewares/authMiddleware.js'
+import { authMiddleware } from '../middlewares/authMiddleware.ts'
 const route = Routes()
 
 route.use(authMiddleware)
