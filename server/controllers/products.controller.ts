@@ -12,7 +12,7 @@
 
     export const getAllProducts = async (req: AuthRequest, res: Response) => {
   try {
-    const products = await product.find({ owner: req.user?.id });
+    const products = await product.find();
     return res.status(200).json(products);
   } catch (error: any) {
     console.log("Error al obtener los productos", error);
