@@ -5,7 +5,7 @@ interface ProductCardProps {
 }
 const ProductCard = ({ children } : ProductCardProps) => {
   return (
-    <div className=" flex flex-col text-start hover:scale-105 transition-transform shadow-lg shadow-black  rounded">
+    <div className=" flex flex-col text-start hover:scale-105 h-120  transition-transform shadow-lg shadow-black  rounded">
             {children}
             </div>
   )

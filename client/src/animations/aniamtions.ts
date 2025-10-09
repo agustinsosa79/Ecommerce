@@ -102,6 +102,12 @@ export const animateOverlayTransition = () => {
   const tl = gsap.timeline()
   tl.set(".overlay-left", { x: 0, opacity: 1 })
   tl.set(".overlay-right", { x: 0, opacity: 1 })
-  tl.to(".overlay-left", { x: "-100%", duration: 1.32, ease: "circ.inOut", opacity: 0.8 })
-  tl.to(".overlay-right", { x: "100%", duration: 1.32, ease: "circ.inOut", opacity: 0.8 }, "<")
+  tl.to(".overlay-left", { x: "-100%", duration: 1.32, ease: "circ.inOut", opacity: 1 })
+  tl.to(".overlay-right", { x: "100%", duration: 1.32, ease: "circ.inOut", opacity: 1 }, "<")
+}
+
+
+
+export const heroAnimation = (hero: HTMLDivElement | null) => {
+  gsap.fromTo(hero, { scale: 0, opacity: 0, duration: 2,}, {scale:1, opacity: 1, duration: 1.3, ease: "back.inOut"})
 }
