@@ -1,7 +1,7 @@
 import { useCart } from "../../hooks/useCart"
 import { useProducts } from "../../hooks/useProducts"
 import type { IProducts } from "../../interfaces/IProducts"
-import ProductCard from "./ProductCard"
+import ProductCard from "../ProductCard"
 import  Slider  from 'react-slick'
 
 
@@ -26,11 +26,9 @@ const SectionCards = () => {
 
 
   return (
-    <div className=" flex flex-col justify-center-safe items-start mt-20 w-full">
-    <h2 className=" font-sans font-semibold text-2xl mt-12 ml-16 p-0">Agregados Recientemente </h2>
-    <div className=" gap-10 m-10 w-full h-full">
-  <div className="absolute top-0 left-0 h-full w-10 bg-gradient-to-r from-white/80 to-transparent pointer-events-none z-10" />
-  <div className="absolute top-0 right-0 h-full w-10 bg-gradient-to-l from-black/80 to-transparent pointer-events-none z-10" />
+    <div className=" flex flex-col justify-center-safe items-start mt-20 w-full ">
+    <h2 className=" font-sans font-semibold text-2xl mt-12 ml-16 p-0 text-white">Agregados Recientemente </h2>
+    <div className=" gap-10 m-10 w-[95%] h-full">
     <Slider {...settings}>
         {products.map((p: IProducts) => (
           <div key={p._id} className="px-5 py-10">
@@ -38,7 +36,7 @@ const SectionCards = () => {
             <ProductCard.Image src={p.image} alt={p.name}>
             <ProductCard.Button onClick={() => addToCart(p._id, 1)}>Añadir Al Carrito</ProductCard.Button>
             </ProductCard.Image>
-            <ProductCard.Info name={p.name} price={p.price} />
+            <ProductCard.Info name={p.name} price={p.price}  />
           </ProductCard>
           </div>
         ))}

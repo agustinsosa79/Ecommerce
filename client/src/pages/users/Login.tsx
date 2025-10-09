@@ -1,22 +1,27 @@
-import { useAuth } from "../../hooks/useAuth";
+import LoginForm from "../../components/login/LoginForm";
+import foto from "../../assets/video-backpage-2.mp4"
 
 
 
 
 
 const Login =  () => {
-  const {handleLogin, setEmail, setPassword, email, password} = useAuth()
+
+  
 
   return (
-    <form onSubmit={handleLogin}>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-
-      <button className="bg-black p-3 text-white" type="submit">Iniciar sesión</button>
-        
-
-    </form>
+    <div className="w-full h-screen flex justify-center items-center overflow-y-hidden" >
+      <div className="overlay-left-login fixed top-0 left-0 w-1/2 h-full bg-black z-50 translate-x-[-1000px]" />
+      <div className="overlay-right-login fixed top-0 right-0 w-1/2 h-full bg-black z-50 -translate-x-[-1000px]" />
+      <video
+      src={foto}
+      autoPlay
+      muted
+      loop
+      className="w-full absolute h-screen object-cover top-0 left-0 z-0"
+      />
+      <LoginForm />
+    </div>
   )
 }
 

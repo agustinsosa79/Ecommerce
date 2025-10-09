@@ -111,3 +111,16 @@ export const animateOverlayTransition = () => {
 export const heroAnimation = (hero: HTMLDivElement | null) => {
   gsap.fromTo(hero, { scale: 0, opacity: 0, duration: 2,}, {scale:1, opacity: 1, duration: 1.3, ease: "back.inOut"})
 }
+
+
+
+export const animateOverlayTransitionLogin = (): Promise<void> => {
+  return new Promise((resolve) => {
+    const tl = gsap.timeline({
+      onComplete: () => resolve() // cuando termine la animación, resolvemos la Promise
+    })
+
+    tl.to(".overlay-left-login", { x: "-0%", duration: 1.32, ease: "circ.inOut", opacity: 1 })
+    tl.to(".overlay-right-login", { x: "0%", duration: 1.32, ease: "circ.inOut", opacity: 1 }, "<")
+  })
+}
