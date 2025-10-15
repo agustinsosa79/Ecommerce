@@ -8,8 +8,6 @@ interface IUser {
     email:string;
 }
 
-
-
 interface IAuthState {
     user: IUser | null,
     token: string | null
@@ -39,12 +37,17 @@ const authSlice = createSlice({
         
             localStorage.removeItem("user")
             localStorage.removeItem("token")
+        },
+        signUpSuccess: (state, action: PayloadAction<{ user: IUser  }> ) => {
+            state.user = action.payload.user
+
+            localStorage.setItem("user", JSON.stringify(action.payload.user))
         }
     }
 })
 
 
-export const { loginSuccess, logout } = authSlice.actions;
+export const { loginSuccess, logout, signUpSuccess } = authSlice.actions;
 export default authSlice.reducer;
 
 

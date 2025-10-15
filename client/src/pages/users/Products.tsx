@@ -1,7 +1,9 @@
+import SectionProductHero from "../../components/products/SectionProductHero"
+
 
 const Products = () => {
   return (
-  <div>hola</div>
+    <SectionProductHero />
   )
 }
 

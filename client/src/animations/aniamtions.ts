@@ -1,4 +1,7 @@
 import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+gsap.registerPlugin(ScrollTrigger)
 
 
 export const animateNavbar = (navRef: HTMLDivElement | null) => {
@@ -124,3 +127,57 @@ export const animateOverlayTransitionLogin = (): Promise<void> => {
     tl.to(".overlay-right-login", { x: "0%", duration: 1.32, ease: "circ.inOut", opacity: 1 }, "<")
   })
 }
+
+export const animateProductCards = (cardsRef: NodeListOf<HTMLDivElement> | undefined) => {
+  if (!cardsRef || cardsRef.length === 0) return;
+
+  const triggerElement = cardsRef[0]?.parentElement;
+  if (!triggerElement) return;
+
+  gsap.fromTo(
+    cardsRef,
+    { opacity: 0, y: 0 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      stagger: 0.1,
+      ease: "power3.inOut",
+      scrollTrigger: {
+        trigger: triggerElement,
+        start: "top 97%",
+      },
+    }
+  );
+};
+
+export const animateCategoryImages = (imagesRef: NodeListOf<HTMLDivElement> | undefined) => {
+  if (!imagesRef || imagesRef.length === 0) return;
+  
+  
+  gsap.set(imagesRef, { opacity: 0, y: 30 });
+
+  gsap.to(imagesRef, {
+    opacity: 1,
+    y: 0,
+    duration: 2,
+    stagger: 0.7,
+    ease: "power3.out",
+    scrollTrigger: {
+  trigger: imagesRef[0]?.parentElement,
+  start: "top 70%",
+  once: true,
+},
+  });
+};
+
+
+
+export const animateFooter = (footerRef: HTMLDivElement | null) => {
+  if(!footerRef) return
+  gsap.fromTo(
+    footerRef,
+    { opacity: 0, y: 50 },
+    { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+      )
+    }

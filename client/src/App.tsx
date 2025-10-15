@@ -8,6 +8,7 @@ import Login from './pages/users/Login'
 import Products from './pages/users/Products'
 import PublicLayout from './layouts/PublicLayout'
 import PrivateLayout from './layouts/PrivateLayout'
+import SignUp from './pages/users/SignUp'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       {/* Layout público (sin navbar) */}
       <Route element={<PublicLayout />}>
         <Route path='/login' element={<Login />} />
+        <Route path='/registrarse' element={<SignUp />} />
       </Route>
 
          {/* Layout privado (con navbar) */}

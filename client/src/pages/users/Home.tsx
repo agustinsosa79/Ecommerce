@@ -3,6 +3,8 @@ import Hero from "../../components/home/Hero"
 import { useEffect } from "react"
 import { animateOverlayTransition } from "../../animations/aniamtions"
 import SectionCards from "../../components/home/SectionCards"
+import SectionCategories from "../../components/home/SectionCategories"
+import SectionFooter from "../../components/home/SectionFooter"
 
 
 
@@ -17,11 +19,13 @@ const Home = () => {
  
 
   return (
-    <main className="realtive overflow-hidden">
+    <main className="realtive overflow-hidden ">
       <div className="overlay-left fixed top-0 left-0 w-1/2 h-full bg-black z-50" />
       <div className="overlay-right fixed top-0 right-0 w-1/2 h-full bg-black z-50" />
     <Hero title="Invierno cálido, estilo seguro." linkText="Explorar" linkTo="/productos" />
       <SectionCards />
+      <SectionCategories />
+      <SectionFooter />
 </main>
   )
 }
