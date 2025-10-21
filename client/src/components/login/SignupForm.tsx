@@ -31,7 +31,7 @@ const SignupForm = () => {
         <input required className="p-3 bg-black/40 rounded-4xl" type="password" name="password" id="password" value={password} onChange={((e) => setPassword(e.target.value))} placeholder="ingesa tú nueva contraseña" />
         <input className="p-3 bg-black/40 rounded-4xl" type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Ingresa tu nombre completo" />
         <input className="p-3 bg-black/40 rounded-4xl" type="text" name="name_user" id="name_user" value={nameUser} onChange={(e) => setNameUser(e.target.value)} placeholder="Ingresa un nuevo nombre de usuario" />
-        <button className=" backdrop-blur-4xl bg-black cursor-pointer w-full p-4 rounded-4xl ">Registrarse</button>
+        <button className=" bg-black shadow-2xl shadow-black cursor-pointer w-full p-4 rounded-4xl border border-transparent hover:border-white/90 transition-all duration-100">Registrarse</button>
         {error && <p className=' text-red-500 z-1 text-center bg-black/30 rounded-3xl w-full border border-white/50 bolder p-2'>{error}</p>}
         <Link to="/login" className="flex flex-row text-white/70 gap-1 w-36 hover:text-white transition-color duration-400 text-sm"><ArrowLeftCircleIcon className="w-5 h-5"/> <span>Ir al incio de sesión</span></Link>
     </form>

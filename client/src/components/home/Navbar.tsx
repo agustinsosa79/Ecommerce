@@ -5,7 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useTokenValid } from "../../hooks/useTokenValid";
 import { useEffect, useRef } from "react";
 import { useCart } from "../../hooks/useCart";
-import { animateCartCounter, animateFloatingPlusOne, animateNavbar, animateNavbarLinks, createNavbarScrollHandler } from "../../animations/aniamtions";
+import { animateCartCounter, animateFloatingPlusOne, animateNavbar, animateNavbarLinks, createNavbarScrollHandler } from "../../animations/animations";
 
 
 const Navbar = () => {
@@ -41,7 +41,7 @@ const prevTotal = useRef<number | null>(null)
   return (
     <nav ref={navRef} className="flex fixed z-20 w-full bg-black/90 text-white items-center justify-between mask-b-from-90% shadow-2xl">
         
-        <Link to="/inicio"><img src={logo} className=" ml-10 h-25 w-25 object-cover rounded-2xl" /></Link>
+        <Link to="/inicio"><img fetchPriority="high" alt="logo-nordik" src={logo} className=" ml-10 h-25 w-25 object-cover rounded-2xl" /></Link>
         <div ref={linksRef} className="flex  gap-15">
         <Link to="/inicio">Inicio</Link>
         <Link to="/productos">Productos</Link>
@@ -50,7 +50,7 @@ const prevTotal = useRef<number | null>(null)
         <div className="flex   items-center justify-center gap-8 mr-30">
         {isTokenValid ? (<>
             <Link to="/perfil" title="Ir a tu perfil"><UserIcon className="h-7 w-7 hover:text-gray-300" /></Link>
-            <button onClick={handleLogout}><ArrowLeftEndOnRectangleIcon title="Cerrar sesion" className="cursor-pointer hover:text-gray-300  h-7 w-7" /></button> 
+            <button name="Cerrar-sesion" onClick={handleLogout}><ArrowLeftEndOnRectangleIcon title="Cerrar sesion" className="cursor-pointer hover:text-gray-300  h-7 w-7" /></button> 
             </>) : 
         (<>
         <Link to="/login">Iniciar sesion</Link>

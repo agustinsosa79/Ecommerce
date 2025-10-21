@@ -4,22 +4,24 @@ import foto2 from '../../assets/fotos-categorias/image-2.webp'
 import foto3 from '../../assets/fotos-categorias/image-3.webp'
 import foto4 from '../../assets/fotos-categorias/image-4.webp'
 import { useEffect } from 'react';
-import { animateCategoryImages } from '../../animations/aniamtions';
+import { animateCategoryImages } from '../../animations/animations';
+import { ScrollTrigger } from 'gsap/all';
 
 interface IImage { 
     src: string;
     alt: string;
     title: string;
+    description?: string;
 }
 
 const SectionCategories = ( ) => {
     const navigate = useNavigate()
 
     const images: IImage[] = [
-        {src: `${foto1}`, alt: 'Urban Light', title: 'Urban Light'},
-        {src: `${foto3}`, alt: 'Winter Mood', title: 'Winter Mood'},
-        {src: `${foto4}`, alt: 'Winter Core', title: 'Winter Core'},
-        {src: `${foto2}`, alt: 'Rain Ready', title: 'Rain Ready'},
+        {src: `${foto1}`, alt: 'Urban Light', title: 'Urban Light', description: 'Inspirada en la energía de la ciudad, esta colección combina abrigo y estilo sin esfuerzo. Tonos neutros, texturas suaves y cortes modernos que se adaptan al ritmo urbano, sin perder calidez ni elegancia.'},
+        {src: `${foto3}`, alt: 'Winter Mood', title: 'Winter Mood', description: 'Prendas que capturan la esencia del invierno: cómodas, versátiles y con un aire nostálgico. Perfectas para los días fríos donde el estilo también necesita un poco de abrigo emocional.'},
+        {src: `${foto4}`, alt: 'Winter Core', title: 'Winter Core', description: 'Una colección que redefine la elegancia invernal. Con cortes clásicos y una paleta de colores atemporales, cada prenda es una declaración de estilo y sofisticación.'},
+        {src: `${foto2}`, alt: 'Rain Ready', title: 'Rain Ready', description: 'Prepárate para la lluvia con estilo. Esta colección combina funcionalidad y moda, asegurando que cada gota de lluvia sea una oportunidad para brillar.'},
     ]
 
     const handleNavigation = () => {
@@ -28,11 +30,17 @@ const SectionCategories = ( ) => {
       }
 
 
-      useEffect(() => {
-        const categoriesRef = document.querySelectorAll('.category-item') as NodeListOf<HTMLDivElement>;
-        animateCategoryImages(categoriesRef);
-        setTimeout(() => ScrollTrigger.refresh(), 500);
-      },[ ])
+     useEffect(() => {
+  const categoriesRef = document.querySelectorAll('.category-item') as NodeListOf<HTMLDivElement>;
+  animateCategoryImages(categoriesRef);
+
+  const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 600);
+
+  return () => {
+    clearTimeout(refreshTimer);
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  };
+}, []);
   return (
     <div className='w-full h-auto flex flex-col justify-center items-center  my-50 '>
         <h2 className='text-4xl text-white font-serif'>Categorias destacadas</h2>
@@ -57,6 +65,9 @@ const SectionCategories = ( ) => {
         <h3 className="text-4xl font-serif text-white mb-6 ml-5 p-10 translate-y-5 group-hover:translate-y-0 transition-all duration-500">
           {image.title}
         </h3>
+        <p className="text-md text-white mb-6 ml-5 p-10 translate-y-5 group-hover:translate-y-0 transition-all duration-500">
+          {image.description}
+        </p>
       </div>
     </div>
   ))}

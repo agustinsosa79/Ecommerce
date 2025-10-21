@@ -20,7 +20,7 @@ ProductCard.Image = ({src, alt, children}: {src: string, alt: string, children?:
 
 
 ProductCard.Button = ({children, onClick} : {children: ReactNode, onClick: MouseEventHandler<HTMLButtonElement>}) => (
-    <button onClick={onClick} className="bg-black/80 backdrop-blur-md shadow-md shadow-black absolute inset-0 m-auto text-sm font-sans w-90 cursor-pointer font-bold h-15 top-60 opacity-0 group-hover:opacity-100 text-white hover:text-black hover:bg-white/80 hover:transition-all hover:duration-800 transition-opacity duration-75 rounded">
+    <button onClick={onClick} className="transition-all duration-200 backdrop-blur-md shadow-md shadow-black absolute inset-0 m-auto text-sm font-sans w-90 cursor-pointer font-bold h-15 top-60  group-hover:opacity-100 text-white hover:text-black bg-black/80 hover:bg-white/80 hover:duration-200 opacity-0 flex justify-center items-center rounded-xl">
     {children}
   </button>
     )
@@ -30,7 +30,7 @@ ProductCard.Info = ({name, price}: {name: string, price: number}) => {
 
   const formatedPrice = price.toLocaleString("es-AR", {currency: "ARS", style: "currency", })
   return(
-    <div className=" p-10 h-full  cursor-pointer text-black hover:bg-black/10">
+    <div className=" p-10 h-full text-black hover:bg-black/10">
     <h3 className="font-bold text-black">{name}</h3>
     <p>{formatedPrice}</p>
   </div>

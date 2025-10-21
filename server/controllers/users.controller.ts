@@ -4,6 +4,7 @@ import { userSchema } from "../schemas/userSchema.schema.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import type { Request, Response } from "express"
+import { email } from "zod"
 
 interface authRequest extends Request {
     user: {id: string}
@@ -52,10 +53,21 @@ export const loginUser: Controller = async (req, res) => {
             return res.status(401).json({message: 'email o contraseña incorrecta'})
         }
         const jwtSecret = process.env.JWT_SECRET_PASSWORD as string;
+        const refreshTokenSecret = process.env.REFRESH_JWT_SECRET_PASSWORD as string;
         if (!jwtSecret) {
             return res.status(500).json({ message: 'JWT secret is not defined in environment variables' });
         }
         const token = jwt.sign({id: userFound._id}, jwtSecret, { expiresIn: '1h'})
+        const refreshToken = jwt.sign({id: userFound._id}, refreshTokenSecret, { expiresIn: '7d'})
+
+
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        })
+
         const { password: _, ...userData} = userFound.toObject()
         return res.status(200).json({ ...userData ,token})
     } catch (error: any) {
@@ -65,25 +77,46 @@ export const loginUser: Controller = async (req, res) => {
 }
 
 
-export const editUser: Controller  = async (req, res) => {
-    try {
-        const { id } = req.params
-        if(req.user.id != id){
-            res.status(401).json({ message : 'no estas autorizado para realizar esta accion' })
-        }
-        const {name, nameUser} = req.body
-        const updates = {name, nameUser}
-        const updatedUser = await user.findByIdAndUpdate(id, updates, { new: true})
-        if(!updatedUser) {
-            return res.status(404).json({ message: 'No se ha encontrado el usuario a actualizar' })
-        }
-        return res.status(200).json(updatedUser)
-    } catch (error) {
-        return res.status(500).json({ message: 'Error al actualizar el usuario' })
+export const editUser: Controller = async (req, res) => {
+  try {
+    const { id } = req.params;
+console.log("req.body en editUser:", req.body);
+    // Solo el usuario puede actualizarse a sí mismo
+    if (req.user.id !== id) {
+      return res.status(401).json({ message: 'No estás autorizado para esta acción' });
     }
 
-}
+    const { name, nameUser, email, password } = req.body;
+    const updates: any = {};
 
+    if (name) updates.name = name;
+    if (nameUser) updates.nameUser = nameUser;
+    if (email) updates.email = email;
+    if (password) {
+      const hashed = await bcrypt.hash(password, 10);
+      updates.password = hashed;
+    }
+
+    // Si no hay cambios
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ message: 'No hay cambios para guardar' });
+    }
+
+    const updatedUser = await user.findByIdAndUpdate(id, updates, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    // No enviar la contraseña de vuelta
+    const { password: _, ...userData } = updatedUser.toObject();
+    return res.status(200).json(userData);
+
+  } catch (error: any) {
+    console.log(error);
+    return res.status(500).json({ message: 'Error al actualizar el usuario', error: error.message });
+  }
+};
 export const getUser : Controller = async (req, res) => {
 try {
     const { id } = req.params
@@ -138,5 +171,32 @@ export const getUsers :Controller= async (req, res) => {
             res.status(200).json(userWithoutPassword)
     } catch (error) {
         return res.status(500).json({ message: 'Error al obtener todos los usuarios' })
+    }
+}
+
+
+export const refreshToken: Controller = async (req, res) => {
+    try {
+        const refreshToken = req.cookies.refreshToken
+        if (!refreshToken) {
+            return res.status(401).json({ message: 'No se proporcionó un refresh token' })
+        }
+
+        const refreshTokenSecret = process.env.REFRESH_JWT_SECRET_PASSWORD as string;
+        if (!refreshTokenSecret) {
+            return res.status(500).json({ message: 'Refresh JWT secret is not defined in environment variables' });
+        }
+
+        const { id } = jwt.verify(refreshToken, refreshTokenSecret) as { id: string }
+        const userFound = await user.findById(id)
+        if (!userFound) {
+            return res.status(404).json({ message: 'Usuario no encontrado' })
+        }
+
+        const newToken = jwt.sign({ id: userFound._id }, process.env.JWT_SECRET_PASSWORD as string, { expiresIn: '1h' })
+        return res.status(200).json({ token: newToken })
+    } catch (error: any) {
+        console.log(error)
+        return res.status(500).json({ message: 'Error al refrescar el token', error: error.message })
     }
 }

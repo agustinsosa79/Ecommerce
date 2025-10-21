@@ -1,21 +1,29 @@
-
 import Hero from "../../components/home/Hero"
 import { useEffect } from "react"
-import { animateOverlayTransition } from "../../animations/aniamtions"
+import { animateOverlayTransition } from "../../animations/animations"
 import SectionCards from "../../components/home/SectionCards"
 import SectionCategories from "../../components/home/SectionCategories"
-import SectionFooter from "../../components/home/SectionFooter"
+import { ScrollTrigger } from "gsap/all"
 
 
 
-const Home = () => {
+ const Home = () => {
 
+    useEffect(() => {
+    // Siempre que se monta Home:
+    // 1️⃣ Mover scroll arriba
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 
-  useEffect(() => {
-    animateOverlayTransition()
-  }, [])
-  
+    // 2️⃣ Ejecutar animación de overlay
+    animateOverlayTransition();
 
+    // 3️⃣ Refrescar ScrollTrigger después de pintar todo
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh(true);
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, []);
  
 
   return (
@@ -25,7 +33,6 @@ const Home = () => {
     <Hero title="Invierno cálido, estilo seguro." linkText="Explorar" linkTo="/productos" />
       <SectionCards />
       <SectionCategories />
-      <SectionFooter />
 </main>
   )
 }

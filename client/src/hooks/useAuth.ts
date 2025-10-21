@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom"
 import { loginSuccess, logout, signUpSuccess } from "../store/slices/authSlice"
 import { useState } from "react"
 import { loginSchema } from "../schemas/loginSchema"
-import { animateOverlayTransitionLogin } from "../animations/aniamtions"
+import { animateOverlayTransitionLogin } from "../animations/animations"
 import { signUpSchema } from "../schemas/signUpSchema"
 import { clearCart } from "../store/slices/cartSlice"
+import { protectedFetch } from "../utils/protectedFetch"
 
 
 
@@ -33,7 +34,7 @@ export const useAuth = () => {
       return
       }
     try {
-        const res = await fetch("http://localhost:4000/users/login", {
+        const res = await protectedFetch("http://localhost:4000/users/login", {
         method: 'POST',
         headers:{
         "Content-Type" : "application/json"
@@ -84,7 +85,8 @@ export const useAuth = () => {
       setLoading(true)
       setError(null)
       try {
-      const res = await fetch("http://localhost:4000/users/register", {
+        console.log({ name, nameUser, email, password });
+      const res = await protectedFetch("http://localhost:4000/users/register", {
         method: 'POST',
         headers:{
         "Content-Type" : "application/json"

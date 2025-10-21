@@ -4,7 +4,7 @@ import { useProducts } from "../../hooks/useProducts"
 import type { IProducts } from "../../interfaces/IProducts"
 import ProductCard from "../ProductCard"
 import  Slider  from 'react-slick'
-import { animateProductCards } from "../../animations/aniamtions"
+import { animateProductCards } from "../../animations/animations"
 
 
 const SectionCards = () => {
@@ -27,7 +27,6 @@ const SectionCards = () => {
     }
   });
 
-  // observa cambios dentro del contenedor del slider
   observer.observe(sectionRef.current, { childList: true, subtree: true });
 
   return () => observer.disconnect();
