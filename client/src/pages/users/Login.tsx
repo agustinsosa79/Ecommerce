@@ -1,5 +1,5 @@
 import LoginForm from "../../components/login/LoginForm";
-import foto from "../../assets/video-backpage-2.mp4"
+import foto from "../../assets/video-backpage-2.webm"
 
 
 
@@ -18,7 +18,7 @@ const Login =  () => {
       autoPlay
       muted
       loop
-      className="w-full absolute h-screen object-cover top-0 left-0 z-0"
+      className="md:w-full absolute h-screen object-cover top-0 left-0 z-0"
       />
       <LoginForm />
     </div>

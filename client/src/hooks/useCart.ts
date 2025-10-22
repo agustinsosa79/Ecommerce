@@ -3,6 +3,8 @@ import type {  AppDispatch, RootState } from "../store/store"
 import type {  ICartResponse } from "../interfaces/ICart"
 import { setCart,  setCartError,  setCartLoading } from "../store/slices/cartSlice"
 import { useCallback, useEffect } from "react"
+import { protectedFetch } from "../utils/protectedFetch"
+import { useTokenValid } from "./useTokenValid"
 
 
 
@@ -10,6 +12,7 @@ export const useCart = () => {
     const dispatch = useDispatch<AppDispatch>()
     const token = useSelector((state: RootState) => state.auth.token)
     const { cart, loading, error } = useSelector((state: RootState) => state.cart )
+    const {valid: isTokenValid} = useTokenValid()
 
 
     const getHeaders = useCallback((): HeadersInit => {
@@ -23,11 +26,12 @@ export const useCart = () => {
         }, [token])
 
     const getCart = useCallback(async () => {
-        if(!token) return
+        if(!isTokenValid) return
         setCartLoading(true)
         try {
-            const res = await fetch('http://localhost:4000/cart',{ headers: getHeaders() })
+            const res = await protectedFetch('http://localhost:4000/cart',{ headers: getHeaders() })
             if (!res.ok) {
+
                 const data = await res.json().catch(() => ({}))
                 throw new Error(data.message)
             }
@@ -44,14 +48,14 @@ export const useCart = () => {
         } finally {
             dispatch(setCartLoading(false))
         }
-    }, [token, dispatch, getHeaders])
+    }, [ dispatch, getHeaders, isTokenValid])
 
     const addToCart = async(productId:string, quantity:number) => {
         dispatch(setCartLoading(true))
         try {
             console.log("TOKEN",token)
             console.log("HEADERS:",getHeaders())
-            const res = await fetch('http://localhost:4000/cart', {
+            const res = await protectedFetch('http://localhost:4000/cart', {
                 method: 'POST',
                 headers: getHeaders(),
                 body: JSON.stringify({ productId, quantity })
@@ -76,8 +80,8 @@ export const useCart = () => {
     const removeItemFromCart = async ( productId:string ) =>{
         dispatch(setCartLoading(true))
         try {
-            
-            const res = await fetch(`http://localhost:4000/${productId} `, {
+
+            const res = await protectedFetch(`http://localhost:4000/cart/${productId}`, {
                 method: 'DELETE',
                 headers: getHeaders()
             })
@@ -95,11 +99,33 @@ export const useCart = () => {
             }
     }}
 
+    const removeCart = async () => {
+        dispatch(setCartLoading(true))
+        try {
+            const res = await protectedFetch("http://localhost:4000/cart", {
+                method: 'DELETE',
+                headers: getHeaders()
+            })
+            if(!res.ok){
+                throw new Error('Error al eliminar el carrito')
+            }
+            dispatch(setCart(null))
+        } catch (error) {
+            if (error instanceof Error) {
+                dispatch(setCartError(error.message))
+            } else {
+                dispatch(setCartError(String(error)))
+            }
+        } finally {
+            dispatch(setCartLoading(false))
+        }
+    }
+
 
     const updateItemFromCart = async (productId: string, quantity: number) => {
         setCartLoading(true)
         try {
-            const res = await fetch(`http://localhost:4000/${productId}`, {
+            const res = await fetch(`http://localhost:4000/cart/${productId}`, {
                 method: 'PUT',
                 headers: getHeaders(),
                 body: JSON.stringify({ quantity })
@@ -136,6 +162,7 @@ export const useCart = () => {
         addToCart,
         removeItemFromCart,
         updateItemFromCart,
+        removeCart,
         loading,
         error, 
         cart,

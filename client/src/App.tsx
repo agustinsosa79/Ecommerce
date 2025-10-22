@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import PrivateRoute from './pages/users/PrivateRoute'
 import Cart from './pages/users/Cart'
@@ -9,13 +9,17 @@ import Products from './pages/users/Products'
 import PublicLayout from './layouts/PublicLayout'
 import PrivateLayout from './layouts/PrivateLayout'
 import SignUp from './pages/users/SignUp'
+import ScrollToTop from './components/ScrollTop'
+import Profile from './pages/users/Profile'
 
 function App() {
 
   return (
     <BrowserRouter>
+    <ScrollToTop />
+    
     <Routes>
-      {/* Layout público (sin navbar) */}
+      <Route path="/" element={<Navigate to="/inicio" replace />} />
       <Route element={<PublicLayout />}>
         <Route path='/login' element={<Login />} />
         <Route path='/registrarse' element={<SignUp />} />
@@ -29,7 +33,7 @@ function App() {
 
       <Route element={<PrivateRoute />}>
         <Route path='/carrito' element={<Cart />}/>
-        <Route path='/perfil' element='' />
+        <Route path='/perfil' element={<Profile />} />
      </Route>
     </Routes>
     </BrowserRouter>

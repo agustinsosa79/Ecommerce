@@ -110,3 +110,15 @@ export const updateCartItem: Controller = async (req, res) => {
         return res.status(500).json({ message: 'Error al eliminar el carrito', error })
     }
     }
+
+
+
+export const deleteCart: Controller = async (req, res) => {
+    try {
+        const userId = req.user?.id
+        await Cart.findOneAndDelete({ userId })
+        return res.json({ message: 'Carrito eliminado con éxito' })
+    } catch (error) {
+        return res.status(500).json({ message: 'Error al eliminar el carrito', error })
+    }
+}

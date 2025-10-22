@@ -2,6 +2,7 @@ import { useEffect} from "react"
 import type { AppDispatch, RootState } from "../store/store"
 import { useDispatch, useSelector } from "react-redux"
 import { setProducts, setProductsError, setProductsLoading } from "../store/slices/productSlice"
+import { protectedFetch } from "../utils/protectedFetch"
 
 
 
@@ -16,7 +17,7 @@ export const useProducts = () => {
         const fetchProducts = async () => {
       dispatch(setProductsLoading(true))
       try {
-        const res = await fetch("http://localhost:4000/products")
+        const res = await protectedFetch("http://localhost:4000/products")
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         const data = await res.json()
         dispatch(setProducts(data))

@@ -1,11 +1,12 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 
-interface IUser {
-    id: string;
+export interface IUser {
+    _id: string;
     name: string;
     nameUser: string;
     email:string;
+    avatar?: string
 }
 
 interface IAuthState {
@@ -24,12 +25,16 @@ const authSlice = createSlice({
     name: "auth",   
     initialState: initialState,
     reducers: {
-        loginSuccess: (state, action: PayloadAction<{ user: IUser, token: string }>) => {
+        loginSuccess: (state, action: PayloadAction<{ user: IUser, token: string | null }>) => {
             state.user = action.payload.user
             state.token = action.payload.token
 
             localStorage.setItem("user", JSON.stringify(action.payload.user))
-            localStorage.setItem("token", action.payload.token)
+            if(action.payload.token) {
+                localStorage.setItem("token", action.payload.token)
+            } else {
+                localStorage.removeItem("token")
+            }
         },
         logout: (state) => {
             state.user = null

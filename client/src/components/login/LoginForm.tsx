@@ -18,22 +18,22 @@ const LoginForm = () => {
     }, [error, setError])
 
   return (
-    <div className=' z-1 text-center bg-white/10 backdrop-blur-2xl rounded-3xl p-10 w-full max-w-xl h-auto flex flex-col justify-center items-center gap-5 border border-white/30 shadow-lg shadow-black/30'>
+    <div className=' z-1 text-center bg-white/10 backdrop-blur-2xl rounded-3xl md:w-full max-w-150 md:p-10 m-2 p-2 w-full   h-auto flex flex-col justify-center items-center gap-5 border border-white/30 shadow-lg shadow-black/30'>
 
-    <div className=' flex flex-col justify-center items-center '>
+    <div className='   flex flex-col justify-center items-center '>
         <img src={foto} alt="" className='z-1 h-30 text-black w-30'/>
-        <h2 className=' text-6xl font-serif text-white mt-5 mb-5 z-1'>
-        Login
+        <h2 className='text-md  md:text-6xl font-serif text-white  mt-5 mb-5 z-1'>
+        Inicio de Sesión
         </h2>
     </div>
-    <form   onSubmit={handleLogin} className="flex flex-col gap-10 p-3  items-start justify-center  text-white  w-200 max-w-lg z-1">
-        <input placeholder='Ingresa tu email' className=' bg-black/50  rounded-3xl p-3 mt-2 w-full' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input placeholder='Ingresa tu contraseña' type="password" value={password} className=' bg-black/50 rounded-3xl p-3 mt-2 w-full' onChange={(e) => setPassword(e.target.value)} />
-        <button className='p-4 rounded-3xl backdrop-blur-2xl text-white bg-black w-full mt-2 cursor-pointer' >Iniciar Sesión</button>
+    <form   onSubmit={handleLogin} className="flex flex-col gap-5 md:gap-10 md:p-3  items-start justify-center  text-white w-full   md:w-200 max-w-lg z-1">
+        <input placeholder='Ingresa tu email' className=' bg-black/50 text-sm md:text-lg  rounded-3xl p-3 mt-2 w-full' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input placeholder='Ingresa tu contraseña' type="password" value={password} className=' bg-black/50 rounded-3xl p-3 mt-2 w-full md:text-lg text-sm' onChange={(e) => setPassword(e.target.value)} />
+        <button className='p-4 rounded-3xl shadow-2xl shadow-black text-white bg-black w-full mt-2 cursor-pointer hover:bg-black/98 border border-transparent hover:border-white/90 transition-all duration-100 text-xs md:text-lg' >Iniciar Sesión</button>
         {error && <p className=' text-red-500 z-1 text-center bg-black/30 rounded-3xl w-full border border-white/50 bolder p-2'>{error}</p>}
         <Link
   to="/registrarse"
-  className="text-sm text-white/70 m-2 hover:text-white border-b border-transparent hover:border-white transition-colors duration-300"
+  className=" text-white/70 m-2 hover:text-white border-b border-transparent hover:border-white transition-colors duration-300 text-xs md:text-lg p-2 md:p-0"
 >
   Registrarse
 </Link>

@@ -1,11 +1,12 @@
 import express from "express";
-import usersRoutes from '../server/routes/users.route.js'
-import productsRoutes from '../server/routes/products.route.js'
+import usersRoutes from '../server/routes/users.routes.js'
+import productsRoutes from '../server/routes/products.routes.js'
 import cartRoutes from '../server/routes/cart.routes.js'
-import ordersRoutes from '../server/routes/orders.route.js'
+import ordersRoutes from '../server/routes/orders.routes.js'
 import { connectDB } from "./server/connectDB.js";
 import cors from 'cors'
 import dotenv from 'dotenv'
+import cookieParser from "cookie-parser";
 const app = express()
 
 
@@ -13,15 +14,16 @@ dotenv.config()
 
 
 app.use(express.json())
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}))
+app.use(cookieParser())
 
 const PORT = 4000
 
 connectDB()
 
-app.use(cors())
-app.get('/', (req, res) => {
-    res.json({message: 'Hola mundo'})
-})
 
 app.use('/products', productsRoutes)
 app.use('/users', usersRoutes)

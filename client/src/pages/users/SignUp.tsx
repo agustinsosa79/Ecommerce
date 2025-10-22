@@ -1,5 +1,5 @@
 import SignupForm from "../../components/login/SignupForm"
-import video_back from "../../assets/video-backpage-2.mp4"
+import video_back from "../../assets/video-backpage-2.webm"
 
 const SignUp = () => {
   return (

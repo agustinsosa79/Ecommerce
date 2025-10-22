@@ -2,6 +2,7 @@ import type { IProducts } from "./IProducts"
 
 
 export interface ICartProductPopulated {
+    _id: string
     productId: IProducts
     quantity: number
 }

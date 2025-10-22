@@ -134,18 +134,18 @@ export const animateProductCards = (cardsRef: NodeListOf<HTMLDivElement> | undef
   const triggerElement = cardsRef[0]?.parentElement;
   if (!triggerElement) return;
 
-  gsap.fromTo(
+  gsap.from(
     cardsRef,
-    { opacity: 0, y: 0 },
     {
-      opacity: 1,
-      y: 0,
-      duration: 1,
+      opacity: 0,
+      y: 50,
+      duration: 0.5,
       stagger: 0.1,
-      ease: "power3.inOut",
+      ease: "power3.inOut", 
       scrollTrigger: {
         trigger: triggerElement,
-        start: "top 97%",
+        start: "top 110%",
+        toggleActions: "play none none reverse",
       },
     }
   );
@@ -155,17 +155,17 @@ export const animateCategoryImages = (imagesRef: NodeListOf<HTMLDivElement> | un
   if (!imagesRef || imagesRef.length === 0) return;
   
   
-  gsap.set(imagesRef, { opacity: 0, y: 30 });
+  gsap.set(imagesRef, { opacity: 0, y: 100 });
 
   gsap.to(imagesRef, {
     opacity: 1,
     y: 0,
     duration: 2,
-    stagger: 0.7,
-    ease: "power3.out",
+    stagger: 0.15,
+    ease: "power3.inOut",
     scrollTrigger: {
   trigger: imagesRef[0]?.parentElement,
-  start: "top 70%",
+  start: "top 96%",
   once: true,
 },
   });
@@ -174,10 +174,66 @@ export const animateCategoryImages = (imagesRef: NodeListOf<HTMLDivElement> | un
 
 
 export const animateFooter = (footerRef: HTMLDivElement | null) => {
-  if(!footerRef) return
+  if (!footerRef) return;
+
   gsap.fromTo(
     footerRef,
     { opacity: 0, y: 50 },
-    { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
-      )
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      ease: "power2.out",
     }
+  );
+};
+
+
+export const animateBanner = (bannerRef: HTMLDivElement | HTMLVideoElement  | null) => {
+  if(!bannerRef) return 
+  gsap.fromTo(
+    bannerRef,
+    {opacity: 0, y: -100, x:0},
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease:  "power4.inOut"
+    }
+  )
+}
+
+
+export const animateTitles = (titlesRef: HTMLDivElement | null) => {
+
+  if (!titlesRef) return
+
+  gsap.fromTo(
+    titlesRef,
+    {opacity: 0, y: -100, x: 0},
+    {
+      opacity:1,
+      y: 0,
+      x: 0,
+      duration: 1.2,
+      ease: "sine.inOut",
+    }
+  )
+
+}
+
+export const animateProductSection = (productsRef: HTMLDivElement[] | null) => {
+    if(!productsRef) return
+
+    gsap.fromTo(
+        productsRef,
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+          stagger: 0.1,
+        }
+      )
+}
