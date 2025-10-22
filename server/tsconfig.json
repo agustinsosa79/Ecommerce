@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",             // versión JS que queremos generar
+    "module": "ES2020",             // módulos ES
+    "moduleResolution": "node",     
+    "outDir": "dist",               // carpeta donde se genera JS compilado
+    "rootDir": "src",               // carpeta de tu código TS
+    "strict": true,                 
+    "esModuleInterop": true,        
+    "skipLibCheck": true,           
+    "sourceMap": true,              
+    "declaration": true,            
+    "declarationMap": true          
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
