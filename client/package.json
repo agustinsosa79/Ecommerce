@@ -17,6 +17,7 @@
     "formik": "^2.4.6",
     "gsap": "^3.13.0",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.546.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-redux": "^9.2.0",

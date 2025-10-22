@@ -184,11 +184,6 @@ export const animateFooter = (footerRef: HTMLDivElement | null) => {
       y: 0,
       duration: 0.7,
       ease: "power2.out",
-      scrollTrigger: {
-        trigger: footerRef,
-        start: "top 100%", 
-        toggleActions: "play reverse", 
-      },
     }
   );
 };

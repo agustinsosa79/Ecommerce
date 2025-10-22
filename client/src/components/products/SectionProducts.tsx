@@ -41,7 +41,7 @@ const SectionProducts = ({ products, loading }: ISectionProducts) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 p-8">
+    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-10 p-1 m-1 md:m-0 md:p-8">
       {products.map((product, i) => (
         <div
           key={product._id}
@@ -50,10 +50,10 @@ const SectionProducts = ({ products, loading }: ISectionProducts) => {
           }}>
         <ProductCard key={product._id} >
           <ProductCard.Image src={product.image} alt={product.name}>
-            <ProductCard.Button onClick={() => addToCart(product._id, 1)}>
-              
+            <ProductCard.Button2 onClick={() => addToCart(product._id, 1)}>
+
               Añadir al carrito
-            </ProductCard.Button>
+            </ProductCard.Button2>
           </ProductCard.Image>
           <ProductCard.Info name={product.name} price={product.price} />
         </ProductCard>

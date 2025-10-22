@@ -24,7 +24,7 @@ const Products = () => {
   return (
     <>
     <SectionProductHero />
-    <section className="flex flex-col justify-center items-center bg-black/10">
+    <section className="flex w-full flex-col justify-center items-center bg-black/10">
     <ProductFilter search={search} setSearch={setSearch} maxPrice={maxPrice} setMaxPrice={setMaxPrice} setLoading={setLoading}  />
     <SectionProducts products={filteredProducts} loading={loading} />
     </section>

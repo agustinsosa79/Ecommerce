@@ -27,7 +27,7 @@ import { ScrollTrigger } from "gsap/all"
  
 
   return (
-    <main className="realtive overflow-hidden ">
+    <main className="realtive w-full overflow-hidden ">
       <div className="overlay-left fixed top-0 left-0 w-1/2 h-full bg-black z-50" />
       <div className="overlay-right fixed top-0 right-0 w-1/2 h-full bg-black z-50" />
     <Hero title="Invierno cálido, estilo seguro." linkText="Explorar" linkTo="/productos" />

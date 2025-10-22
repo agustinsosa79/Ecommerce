@@ -21,7 +21,7 @@ const ProductFilter = ({ maxPrice, setMaxPrice, setSearch, setLoading }: PropsFi
   }, [inputValue, setSearch, setLoading])
 
   return (
-    <section className="w-460  mt-20 p-10 bg-zinc-900/30 backdrop-blur-xl border border-zinc-500/20  flex flex-col sm:flex-row justify-between items-center gap-6 shadow-lg rounded-xl">
+    <section className="md:w-460 w-full  p-10 rounded-none   md:mt-20 md:p-10 bg-zinc-900/30 backdrop-blur-xl border border-zinc-500/20  flex flex-col sm:flex-row justify-between items-center gap-6 shadow-lg md:rounded-xl">
       <div className="flex-1 w-full sm:w-auto">
         <input
           type="text"
@@ -40,10 +40,8 @@ const ProductFilter = ({ maxPrice, setMaxPrice, setSearch, setLoading }: PropsFi
             onChange={(e) => setMaxPrice(e.target.value)}
             className="ml-2 w-36 px-3 py-2 rounded-xl bg-zinc-800 text-white focus:outline-none focus:ring-2 focus:ring-white/30 shadow-inner transition"
           >
-            <option value="$200">Hasta $200</option>
-            <option value="$500">Hasta $500</option>
-            <option value="$1000">Hasta $1000</option>
-            <option value="$2000">Hasta $2000</option>
+            <option value="1000">Hasta $1000</option>
+            <option value="2000">Hasta $2000</option>
           </select>
         </label>
       </div>

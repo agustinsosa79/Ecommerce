@@ -4,6 +4,7 @@ import type {  ICartResponse } from "../interfaces/ICart"
 import { setCart,  setCartError,  setCartLoading } from "../store/slices/cartSlice"
 import { useCallback, useEffect } from "react"
 import { protectedFetch } from "../utils/protectedFetch"
+import { useTokenValid } from "./useTokenValid"
 
 
 
@@ -11,6 +12,7 @@ export const useCart = () => {
     const dispatch = useDispatch<AppDispatch>()
     const token = useSelector((state: RootState) => state.auth.token)
     const { cart, loading, error } = useSelector((state: RootState) => state.cart )
+    const {valid: isTokenValid} = useTokenValid()
 
 
     const getHeaders = useCallback((): HeadersInit => {
@@ -24,11 +26,12 @@ export const useCart = () => {
         }, [token])
 
     const getCart = useCallback(async () => {
-        if(!token) return
+        if(!isTokenValid) return
         setCartLoading(true)
         try {
             const res = await protectedFetch('http://localhost:4000/cart',{ headers: getHeaders() })
             if (!res.ok) {
+
                 const data = await res.json().catch(() => ({}))
                 throw new Error(data.message)
             }
@@ -45,7 +48,7 @@ export const useCart = () => {
         } finally {
             dispatch(setCartLoading(false))
         }
-    }, [token, dispatch, getHeaders])
+    }, [ dispatch, getHeaders, isTokenValid])
 
     const addToCart = async(productId:string, quantity:number) => {
         dispatch(setCartLoading(true))
