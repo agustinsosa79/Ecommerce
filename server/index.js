@@ -1,9 +1,9 @@
 import express from "express";
-import usersRoutes from '../server/routes/users.routes.js'
-import productsRoutes from '../server/routes/products.routes.js'
-import cartRoutes from '../server/routes/cart.routes.js'
-import ordersRoutes from '../server/routes/orders.routes.js'
-import { connectDB } from "./server/connectDB.js";
+import usersRoutes from '../server/src/routes/users.routes.js'
+import productsRoutes from '../server/src/routes/products.routes.js'
+import cartRoutes from '../server/src/routes/cart.routes.js'
+import ordersRoutes from '../server/src/routes/orders.routes.js'
+import { connectDB } from "../server/src/server/connectDB.js";
 import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from "cookie-parser";
@@ -15,12 +15,12 @@ dotenv.config()
 
 app.use(express.json())
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: 'http://localhost:5173',
     credentials: true
 }))
 app.use(cookieParser())
 
-const PORT = 4000
+const PORT = process.env.PORT || 4000
 
 connectDB()
 
