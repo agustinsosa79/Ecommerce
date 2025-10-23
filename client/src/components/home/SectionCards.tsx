@@ -104,7 +104,7 @@ useEffect(() => {
         Agregados Recientemente
       </h2>
       <div className="w-full md:m-10 md:w-[95%]" ref={sectionRef}>
-        <Slider {...settings}>
+        <Slider ref={sliderRef} {...settings}>
           {products.map((p: IProducts) => (
             <div
               key={p._id}
