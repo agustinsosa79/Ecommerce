@@ -15,7 +15,7 @@ export const protectedFetch = async (url: string, options: RequestInit = {}) => 
 
   if (res.status === 401) {
     // Token expirado: pedimos nuevo
-    const refreshRes = await fetch("http://localhost:4000/users/refresh", {
+    const refreshRes = await fetch(`${import.meta.env.VITE_API_URL}/users/refresh`, {
       method: "POST",
       credentials: "include",
     });

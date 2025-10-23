@@ -17,7 +17,7 @@ export const useProducts = () => {
         const fetchProducts = async () => {
       dispatch(setProductsLoading(true))
       try {
-        const res = await protectedFetch("http://localhost:4000/products")
+        const res = await protectedFetch(`${import.meta.env.VITE_API_URL}/products`)
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         const data = await res.json()
         dispatch(setProducts(data))

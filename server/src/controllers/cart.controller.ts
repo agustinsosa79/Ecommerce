@@ -27,37 +27,43 @@ export const getCart: Controller = async (req, res) => {
     }
 }
 
-
 export const addCart: Controller = async (req, res) => {
-    try {
-        const userId = req.user?.id
-        const { productId, quantity } = req.body
+  try {
+    const userId = req.user?.id;
+    const { productId, quantity } = req.body;
 
-        const product = await Product.findById(productId)
-        if(!product) {
-            return res.status(404).json({ message: 'Producto no encontrado' })
-        }
-        let cart = await Cart.findOne({ userId })
-        if (!cart) { 
-            cart = new Cart({ userId: userId, products: []})
-        }
-        
-        const existing = cart.products.find(p => p.productId.toString() === productId)
+    let cart = await Cart.findOne({ userId });
 
-        existing ? existing.quantity += quantity : cart.products.push({ productId, quantity})
-
-        await cart.save()
-        
-        const populatedCart = await cart.populate('products.productId')
-        
-        return res.json({ 
-            message: `Se agregó ${quantity} ${quantity > 1 ? 'productos': 'producto'} al carrito`,
-            cart: populatedCart
-        })
-        } catch (error) {
-        return res.status(500).json({ message: 'Error al añadir el producto', error })
+    if (!cart) {
+      // si no existe el carrito, crear uno nuevo
+      cart = await Cart.create({
+        userId,
+        products: [{ productId, quantity }],
+      });
+      return res.json({ message: "Carrito creado y producto agregado", cart });
     }
-}   
+
+    // buscar si el producto ya está en el carrito
+    const existingProduct = cart.products.find(
+      (p) => p.productId.toString() === productId
+    );
+
+    if (existingProduct) {
+      existingProduct.quantity += quantity;
+    } else {
+      cart.products.push({ productId, quantity });
+    }
+
+    await cart.save();
+
+    // no usamos populate aquí — solo IDs, mucho más rápido
+    return res.json({ message: "Producto agregado al carrito", cart });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error al añadir el producto", error });
+  }
+};
 
 export const updateCartItem: Controller = async (req, res) => {
     try {
