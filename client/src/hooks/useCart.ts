@@ -29,7 +29,7 @@ export const useCart = () => {
         if(!isTokenValid) return
         setCartLoading(true)
         try {
-            const res = await protectedFetch('http://localhost:4000/cart',{ headers: getHeaders() })
+            const res = await protectedFetch(`${import.meta.env.VITE_API_URL}/cart`,{ headers: getHeaders() })
             if (!res.ok) {
 
                 const data = await res.json().catch(() => ({}))
@@ -55,7 +55,7 @@ export const useCart = () => {
         try {
             console.log("TOKEN",token)
             console.log("HEADERS:",getHeaders())
-            const res = await protectedFetch('http://localhost:4000/cart', {
+            const res = await protectedFetch(`${import.meta.env.VITE_API_URL}/cart`, {
                 method: 'POST',
                 headers: getHeaders(),
                 body: JSON.stringify({ productId, quantity })
@@ -81,7 +81,7 @@ export const useCart = () => {
         dispatch(setCartLoading(true))
         try {
 
-            const res = await protectedFetch(`http://localhost:4000/cart/${productId}`, {
+            const res = await protectedFetch(`${import.meta.env.VITE_API_URL}/cart/${productId}`, {
                 method: 'DELETE',
                 headers: getHeaders()
             })
@@ -102,7 +102,7 @@ export const useCart = () => {
     const removeCart = async () => {
         dispatch(setCartLoading(true))
         try {
-            const res = await protectedFetch("http://localhost:4000/cart", {
+            const res = await protectedFetch(`${import.meta.env.VITE_API_URL}/cart`, {
                 method: 'DELETE',
                 headers: getHeaders()
             })
@@ -125,7 +125,7 @@ export const useCart = () => {
     const updateItemFromCart = async (productId: string, quantity: number) => {
         setCartLoading(true)
         try {
-            const res = await fetch(`http://localhost:4000/cart/${productId}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/cart/${productId}`, {
                 method: 'PUT',
                 headers: getHeaders(),
                 body: JSON.stringify({ quantity })

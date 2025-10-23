@@ -34,13 +34,14 @@ export const useAuth = () => {
       return
       }
     try {
-        const res = await protectedFetch("http://localhost:4000/users/login", {
+        const res = await protectedFetch(`${import.meta.env.VITE_API_URL}/users/login`, {
         method: 'POST',
         headers:{
         "Content-Type" : "application/json"
         },
         body: JSON.stringify({ email, password })
-    })
+      })
+      console.log(res)
     if(!res.ok){
         console.log("no se ha podido iniciar sesion")
         return
@@ -86,7 +87,7 @@ export const useAuth = () => {
       setError(null)
       try {
         console.log({ name, nameUser, email, password });
-      const res = await protectedFetch("http://localhost:4000/users/register", {
+      const res = await protectedFetch(`${import.meta.env.VITE_API_URL}/users/register`, {
         method: 'POST',
         headers:{
         "Content-Type" : "application/json"
