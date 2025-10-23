@@ -17,23 +17,22 @@ const Navbar = () => {
     const cartIconRef = useRef<HTMLAnchorElement | null>(null);
     const { handleLogout } = useAuth()
     const { valid: isTokenValid } = useTokenValid()
-    const { totalItem } = useCart()
+    const { totalItem, loading } = useCart()
     const [isSidebarOpen, setSidebarOpen] =  useState(false);
     
-const prevTotal = useRef<number | null>(null)
+ // Guardamos el total anterior para compararlo
+  const prevTotalRef = useRef(totalItem)
 
-  useEffect(() => {
-    if (prevTotal.current === null) {
-    prevTotal.current = totalItem
-    return 
+useEffect(() => {
+  if(!loading) return
+  if (prevTotalRef.current !== null && totalItem > prevTotalRef.current) {
+    animateFloatingPlusOne(cartIconRef.current)
+    animateCartCounter(counterRef.current)
   }
 
-    if(totalItem > (prevTotal.current ?? 0)){
-      animateFloatingPlusOne(cartIconRef.current)
-      animateCartCounter(counterRef.current)
-    }
-}, [totalItem]);
-
+  // Siempre actualizamos el prevTotal
+  prevTotalRef.current = totalItem
+}, [totalItem, loading])
 
     useEffect(() => {
       animateNavbar(navRef.current)
@@ -71,7 +70,7 @@ const prevTotal = useRef<number | null>(null)
           <div className="md:flex-none flex flex-row items-center justify-center gap-none">
         <Link ref={cartIconRef} to="/carrito" className="hover:text-gray-300 flex flex-row border-2 border-transparent w-7 h-auto md:h-auto md:w-7"><ShoppingCartIcon title="Tú carrito" /></Link>
         
-        {totalItem > 0 && isTokenValid ? <div ref={counterRef} className="  flex items-center p-1 justify-center rounded-full  text-white border-transparent   font-semibold shadow-md">{totalItem}</div> : 0}
+        {!loading && totalItem > 0 && isTokenValid ? <div ref={counterRef} className="  flex items-center p-1 justify-center rounded-full  text-white border-transparent   font-semibold shadow-md">{totalItem}</div> : 0}
           </div>
         <button
         onClick={() => setSidebarOpen(!isSidebarOpen)}
