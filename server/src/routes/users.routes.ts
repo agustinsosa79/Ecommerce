@@ -1,7 +1,7 @@
 import {Router} from 'express'
 
-import { registerUser, loginUser, getUser, editUser, deleteUser, getUsers, refreshToken } from '../controllers/users.controller.ts'
-import { authMiddleware } from '../middlewares/authMiddleware.ts'
+import { registerUser, loginUser, getUser, editUser, deleteUser, getUsers, refreshToken } from '../controllers/users.controller.js'
+import { authMiddleware } from '../middlewares/authMiddleware.js'
 
 const route = Router()
 

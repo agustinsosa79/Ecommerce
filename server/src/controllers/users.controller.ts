@@ -1,22 +1,20 @@
 import mongoose from "mongoose"
-import user from "../models/user.model.ts"
+import user from "../models/user.model.js"
+//@ts-ignore
 import { userSchema } from "../schemas/userSchema.schema.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import type { Request, Response } from "express"
-import { email } from "zod"
 
 interface authRequest extends Request {
-    user: {id: string}
+    user?: {id: string}
 }
 
 
 
-type Controller = (req: authRequest, res: Response) => Promise<Response | void>;
 
-export const registerUser : Controller  = async (req, res) => {
+export const registerUser = async (req: authRequest, res: Response) => {
     try {
-
         const { email } = req.body
         const emailExisting = await user.findOne({ email })
         if(emailExisting) {
@@ -40,10 +38,9 @@ export const registerUser : Controller  = async (req, res) => {
 }
 
 
-export const loginUser: Controller = async (req, res) => {
+export const loginUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body
-
         const userFound = await user.findOne({email})
         if(!userFound) {
             return res.status(404).json({message: 'email no encontrado'})
@@ -77,12 +74,12 @@ export const loginUser: Controller = async (req, res) => {
 }
 
 
-export const editUser: Controller = async (req, res) => {
+export const editUser = async (req: authRequest, res: Response) => {
   try {
     const { id } = req.params;
 console.log("req.body en editUser:", req.body);
     // Solo el usuario puede actualizarse a sí mismo
-    if (req.user.id !== id) {
+    if (req.user?.id !== id) {
       return res.status(401).json({ message: 'No estás autorizado para esta acción' });
     }
 
@@ -117,7 +114,7 @@ console.log("req.body en editUser:", req.body);
     return res.status(500).json({ message: 'Error al actualizar el usuario', error: error.message });
   }
 };
-export const getUser : Controller = async (req, res) => {
+export const getUser = async (req: authRequest, res: Response) => {
 try {
     const { id } = req.params
 
@@ -128,7 +125,7 @@ try {
     if(!userObtained) {
         return res.status(404).json({ message: 'el usuario no existe' })
     }
-    if(req.user.id != String(userObtained._id)) {
+    if(req.user?.id != String(userObtained._id)) {
         return res.status(401).json({ message: 'No tienes permisos para realizar esta acción' })
     } 
 
@@ -142,7 +139,7 @@ try {
 }
 }
 
-export const deleteUser : Controller = async (req, res) => {
+export const deleteUser = async (req: authRequest, res: Response) => {
     try {
         const { id } = req.params
         const userToDeleted = await user.findByIdAndDelete(id)
@@ -156,7 +153,7 @@ export const deleteUser : Controller = async (req, res) => {
 
 }
 
-export const getUsers :Controller= async (req, res) => {
+export const getUsers = async (req: authRequest, res: Response) => {
     try {
         const allUsers = await user.find()
             if(!allUsers){
@@ -175,7 +172,7 @@ export const getUsers :Controller= async (req, res) => {
 }
 
 
-export const refreshToken: Controller = async (req, res) => {
+export const refreshToken = async (req: authRequest, res: Response) => {
     try {
         const refreshToken = req.cookies.refreshToken
         if (!refreshToken) {

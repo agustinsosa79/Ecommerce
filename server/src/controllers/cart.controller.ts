@@ -1,6 +1,6 @@
 import type { Request, Response } from "express"
-import Cart from "../models/cart.model.ts"
-import Product from "../models/product.model.ts"
+import Cart from "../models/cart.model.js"
+import Product from "../models/product.model.js"
 
 interface AuthRequest extends Request {
     user?: { id: string }

@@ -1,4 +1,5 @@
-    import product from "../models/product.model.ts"
+    import product from "../models/product.model.js"
+    //@ts-ignore
     import { productSchema } from "../schemas/product.schema.js"
     import type { Request, Response  } from "express"
 

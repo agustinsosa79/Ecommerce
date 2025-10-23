@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getAllProducts, getProduct, createProduct, editProduct, deleteProduct, createManyProducts } from "../controllers/products.controller.ts"
-import { authMiddleware } from "../middlewares/authMiddleware.ts";
+import { getAllProducts, getProduct, createProduct, editProduct, deleteProduct, createManyProducts } from "../controllers/products.controller.js"
+import { authMiddleware } from '../middlewares/authMiddleware.js'
 const route = Router();
 
 
