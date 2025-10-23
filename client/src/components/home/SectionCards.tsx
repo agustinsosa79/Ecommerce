@@ -51,7 +51,7 @@ const SectionCards = () => {
   return (
     <div className=" flex flex-col text-start md:justify-center md:items-start mt-10 md:mt-30 w-full ">
     <h2 className=" font-serif font-semibold text-3xl md:text-2xl mt-12 m-5 md:ml-16 p-0 text-white">Agregados Recientemente </h2>
-    <div className=" gap-10 m-2 md:m-10 md:w-[95%] md:h-full" ref={sectionRef}>
+    <div className=" gap-10 m-2 md:m-10 md:w-[95%] md:h-full w-full" ref={sectionRef}>
     <Slider {...settings}>
         {products.map((p: IProducts) => (
           <div key={p._id} className="product-slide px-1 py-8 md:px-5  md:py-10">
