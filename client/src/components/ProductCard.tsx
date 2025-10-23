@@ -20,7 +20,7 @@ ProductCard.Image = ({src, alt, children}: {src: string, alt: string, children?:
 
 
 ProductCard.Button = ({children, onClick, className} : {children: ReactNode, onClick: MouseEventHandler<HTMLButtonElement>, className?: string}) => (
-    <button onClick={onClick} className={`transition-all opacity-100 duration-200 backdrop-blur-md shadow-md shadow-black absolute inset-0 md:m-auto md:text-sm font-sans w-65 md:p-0  m-2  md:w-90 cursor-pointer font-bold top-48 h-13 md:h-15 md:top-60  group-hover:opacity-100 text-white  bg-black/80 hover:bg-zinc-800 hover:border-zinc-200 border-2 border-transparent hover:duration-200 md:opacity-0 flex justify-center items-center rounded-xl text-xs ${className}`}>
+    <button onClick={onClick} className={`transition-all opacity-100 duration-200 backdrop-blur-md shadow-md shadow-black absolute inset-0 md:m-auto md:text-sm font-sans w-65 md:p-0  m-2  md:w-60 cursor-pointer font-bold top-48 left-2 calc md:left-0 h-13 md:h-15 md:top-60  group-hover:opacity-100 text-white  bg-black/80 hover:bg-zinc-800 hover:border-zinc-200 border-2 border-transparent hover:duration-200 md:opacity-0 flex justify-center items-center rounded-xl text-xs ${className}`}>
     {children}
   </button>
     )
