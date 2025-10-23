@@ -32,38 +32,30 @@ export const addCart: Controller = async (req, res) => {
     const userId = req.user?.id;
     const { productId, quantity } = req.body;
 
-    let cart = await Cart.findOne({ userId });
-
-    if (!cart) {
-      // si no existe el carrito, crear uno nuevo
-      cart = await Cart.create({
-        userId,
-        products: [{ productId, quantity }],
-      });
-      return res.json({ message: "Carrito creado y producto agregado", cart });
-    }
-
-    // buscar si el producto ya está en el carrito
-    const existingProduct = cart.products.find(
-      (p) => p.productId.toString() === productId
+    // Intentamos incrementar la cantidad si ya existe el producto en el carrito
+    const updatedCart = await Cart.findOneAndUpdate(
+      { userId, "products.productId": productId },
+      { $inc: { "products.$.quantity": quantity } },
+      { new: true }
     );
 
-    if (existingProduct) {
-      existingProduct.quantity += quantity;
-    } else {
-      cart.products.push({ productId, quantity });
+    if (updatedCart) {
+      return res.json({ message: "Producto agregado al carrito", cart: updatedCart });
     }
 
-    await cart.save();
+    // Si no existía el producto, agregamos uno nuevo o creamos el carrito si no existe
+    const cart = await Cart.findOneAndUpdate(
+      { userId },
+      { $push: { products: { productId, quantity } } },
+      { new: true, upsert: true } // upsert crea el carrito si no existía
+    );
 
-    // no usamos populate aquí — solo IDs, mucho más rápido
     return res.json({ message: "Producto agregado al carrito", cart });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error al añadir el producto", error });
+    return res.status(500).json({ message: "Error al añadir el producto", error });
   }
 };
+
 
 export const updateCartItem: Controller = async (req, res) => {
     try {
