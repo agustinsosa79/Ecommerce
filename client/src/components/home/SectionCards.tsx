@@ -15,22 +15,6 @@ const SectionCards = () => {
   const sliderRef = useRef<Slider>(null);
 
   // Animaciones
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new MutationObserver(() => {
-      const cards = sectionRef.current?.querySelectorAll(
-        ".product-slide"
-      ) as NodeListOf<HTMLDivElement>;
-      if (cards && cards.length > 0) {
-        animateProductCards(cards);
-        observer.disconnect();
-      }
-    });
-
-    observer.observe(sectionRef.current, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, [products]);
 
 
   const initialSlides = window.innerWidth <= 480 ? 1 :
@@ -58,10 +42,37 @@ const SectionCards = () => {
     ],
   }), [initialSlides]);
 
+  const firstRender = useRef(true);
+
+useEffect(() => {
+  if (!sectionRef.current) return;
+
+  const observer = new MutationObserver(() => {
+    if (firstRender.current) {
+      firstRender.current = false; // ignoramos la primera carga
+      return;
+    }
+
+    const cards = sectionRef.current?.querySelectorAll(
+      ".product-slide"
+    ) as NodeListOf<HTMLDivElement>;
+
+    if (cards && cards.length > 0) {
+      animateProductCards(cards);
+    }
+  });
+
+  observer.observe(sectionRef.current, { childList: true, subtree: true });
+
+  return () => observer.disconnect();
+}, [products]);
+
   // Forzar recalculo del slider al montar o cambiar productos
   useEffect(() => {
+    
     if (!sliderRef.current || products.length === 0) return;
 
+  
     const handleResize = () => {
       const slider = sliderRef.current as unknown as {
         innerSlider?: { onWindowResized?: () => void };
