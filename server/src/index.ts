@@ -1,11 +1,13 @@
 import express from "express";
-import usersRoutes from '../server/src/routes/users.routes.js'
-import productsRoutes from '../server/src/routes/products.routes.js'
-import cartRoutes from '../server/src/routes/cart.routes.js'
-import ordersRoutes from '../server/src/routes/orders.routes.js'
-import { connectDB } from "../server/src/server/connectDB.js";
+import usersRoutes from './routes/users.routes.js'
+import productsRoutes from './routes/products.routes.js'
+import cartRoutes from './routes/cart.routes.js'
+import ordersRoutes from './routes/orders.routes.js'
+import { connectDB } from "./server/connectDB.js";
+//@ts-ignore
 import cors from 'cors'
 import dotenv from 'dotenv'
+//@ts-ignore
 import cookieParser from "cookie-parser";
 const app = express()
 
